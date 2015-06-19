@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">服务业运行监测系统</string>
+    <string name="activity_details">消息</string>
+    <string name="nav_item_outbox">Outbox</string>
+    <string name="nav_item_about">关于</string>
+    <string name="nav_item_login">Login</string>
+    <string name="nav_item_logout">Logout</string>
+    <string name="nav_item_message">消息</string>
+    <string name="nav_item_public">公共消息</string>
+    <string name="nav_item_read">已读消息</string>
+    <string name="nav_item_unread">未读消息</string>
+    <string name="nav_item_send">发布消息</string>
+    <string name="nav_item_sent">已发消息</string>
+    <string name="nav_item_setting">设置</string>
+    <string name="nav_item_help">帮助/反馈</string>
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_message</item>
+        <item>@string/nav_item_public</item>
+        <item>@string/nav_item_outbox</item>
+        <item>@string/nav_item_about</item>
+    </string-array>
+
+    <string name="action_refresh">更新</string>
+    <string name="action_refresh_status">正在更新...</string>
+    <string name="action_settings">设置</string>
+    <string name="action_send">发送</string>
+    <string name="action_open_browser">浏览器打开</string>
+    <string name="action_send_mail">发送邮件反馈</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="action_login">登录</string>
+    <string name="action_logout">注销</string>
+    <string name="action_back">返回</string>
+
+    <string name="state_get_error">获取页面失败,请检查网络连接</string>
+    <string name="stage_not_login">您没有登录,请重新登录</string>
+    <string name="stage_post_failed">发送消息失败</string>
+    <string name="stage_post_success">发送消息成功</string>
+    <string name="stage_undo_success">撤销消息成功</string>
+    <string name="stage_logout_success">注销成功</string>
+    <string name="stage_refresh">正在更新...</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_message">发消息</string>
+
+    <string name="action_choose">选择</string>
+
+    <string name="hint_message_to">发送到:</string>
+    <string name="hint_message_title">标题</string>
+    <string name="hint_message_content">正文</string>
+    <string name="hint_message_directions">选择工作方向</string>
+    <string name="hint_message_sms">发送短信提示</string>
+    <string name="hint_message_limit">限制选项</string>
+    <string-array name="limit">
+        <item>仅限名单中的部门或人员查看</item>
+        <item>不限制(公开)</item>
+    </string-array>
+    <string name="hint_message_trace">跟踪选项</string>
+    <string-array name="trace">
+        <item>仅跟踪预设名单</item>
+        <item>跟踪全部</item>
+    </string-array>
+    <string name="hint_message_urgency">紧急度</string>
+    <string-array name="urgency">
+        <item>普通</item>
+        <item>紧急</item>
+    </string-array>
+    <string name="hint_message_important">重要度</string>
+    <string-array name="important">
+        <item>一般</item>
+        <item>重要</item>
+    </string-array>
+    <string-array name="directions">
+        <item>教务</item>
+        <item>科研</item>
+        <item>学工</item>
+        <item>党政</item>
+        <item>工会</item>
+    </string-array>
+
+    <string name="create_message_header">消息选项</string>
+
+    <string name="notify_no_contact">用户不存在,请检查用户名称: </string>
+    <string name="notify_ask_undo">消息已发送, 是否要撤销发送?</string>
+    <string name="action_undo">撤销</string>
+
+    <string name="list_no_data">没有数据</string>
+
+    <string name="title_activity_help">帮助/反馈</string>
+    <string name="help_title">帮助/反馈</string>
+
+    <string name="dialog_about">关于本软件</string>
+    <string name="dialog_about_content">软件版本：0.1</string>
+
+    <string name="action_reply">回复</string>
+    <string name="action_show_web">网页</string>
+    <string name="action_show_text">文本</string>
+    <string name="pref_tail">消息标题尾巴</string>
+    <string name="pref_desc_tail">开启消息标题尾巴后，所有消息的标题后面都会附加用户自定义的信息，如发送人名字，用来标识发送者</string>
+    <string name="pref_desc_message_tail">如果不设置尾巴信息，则默认为用户名</string>
+    <string name="hint_message_option">发送选项</string>
+    <string name="title_activity_chart">ChartActivity</string>
+
+    <string name="tab_overview">综合指数</string>
+    <string name="tab_cpi">CPI</string>
+    <string name="tab_ppi">PPI</string>
+    <string name="tab_pmi">PMI</string>
+
+    <string name="nav_item_index">发展指数</string>
+    <string name="nav_item_news">新闻</string>
+    <string name="nav_item_report">运行报告</string>
+    <string name="nav_item_policy">发展政策</string>
+    <string name="nav_item_environment">市场环境</string>
+    <string name="nav_item_business">行业动态</string>
+    <string name="title_activity_news">NewsActivity</string>
+
+</resources>
