@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import edu.guet.jjhome.indexsp.model.ClimateIndex;
 import edu.guet.jjhome.indexsp.model.Contact;
 import edu.guet.jjhome.indexsp.model.Item;
 import edu.guet.jjhome.indexsp.model.User;
@@ -260,7 +261,6 @@ public class WebParser {
             item.msg_type = AppConstants.MSG_SENT;
             item.sender = User.currentUser().username;
 
-            Log.d("Send message information:", item.sender + item.title + item.directions + item.message_id + item.sent_at);
             item.save();
         }
     }
@@ -270,6 +270,66 @@ public class WebParser {
             return url.substring(url.indexOf("Details/") + 8, url.length());
         }
         return null;
+    }
+
+    public static void parseClimateIndex(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+
+            String loca = jsonObject.getString("loca");
+            String cate = jsonObject.getString("cate");
+
+            Log.d("location:", loca);
+
+            JSONArray smeArray = jsonObject.getJSONArray("sme");
+            JSONObject index;
+            ClimateIndex ind;
+            String date;
+            for(int i=0; i<smeArray.length(); i++) {
+
+                index = smeArray.getJSONObject(i);
+                date = index.getString("date");
+                ind = ClimateIndex.fetch(date, loca, cate);
+
+                ind.date = date;
+                ind.sme = index.getString("sme");
+                ind.ratio = index.getString("ratio");
+                ind.type = index.getString("type");
+                ind.graph = index.getString("graph");
+
+                ind.loca = loca;
+                ind.cate = cate;
+
+                ind.save();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void parsePredictIndex(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+
+            JSONArray predictArray = jsonObject.getJSONArray("predict");
+//            String date, sme, ratio, type, graph;
+            JSONObject index;
+            ClimateIndex ind;
+            for(int i=0; i<predictArray.length(); i++) {
+                ind = new ClimateIndex();
+
+                index = predictArray.getJSONObject(i);
+                ind.date = index.getString("date");
+                ind.sme = index.getString("sme");
+                ind.ratio = index.getString("ratio");
+                ind.type = index.getString("type");
+                ind.graph = index.getString("graph");
+                ind.save();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
 

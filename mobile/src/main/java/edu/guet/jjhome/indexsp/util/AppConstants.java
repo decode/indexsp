@@ -53,4 +53,8 @@ public class AppConstants {
 
     public static final long SNACKBAR_DURATION = 6000;
 
+
+    public static final String INDEX_CLIMATE = "climate";
+    public static final String INDEX_PREDICT = "predict";
+
 }

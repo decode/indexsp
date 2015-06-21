@@ -71,9 +71,8 @@ public class MainActivity extends ActionBarActivity {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add(R.string.tab_overview, ChartActivityFragment.class)
-                .add(R.string.tab_cpi, ChartActivityFragment.class)
-                .add(R.string.tab_ppi, ChartActivityFragment.class)
-                .add(R.string.tab_pmi, ChartActivityFragment.class)
+                .add(R.string.tab_travel, ChartActivityFragment.class)
+                .add(R.string.tab_logistics, ChartActivityFragment.class)
                 .create());
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);

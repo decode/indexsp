@@ -52,7 +52,7 @@ public class Contact extends Model implements Serializable {
 
         if (contact == null) {
             contact = new Contact();
-            Log.d("Not find existed contact", "create new");
+            Log.d("Not find existed", "create new");
         }
         else {
         }

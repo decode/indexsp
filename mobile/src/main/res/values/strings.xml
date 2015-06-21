@@ -105,7 +105,10 @@
     <string name="hint_message_option">发送选项</string>
     <string name="title_activity_chart">ChartActivity</string>
 
-    <string name="tab_overview">综合指数</string>
+    <string name="tab_overview">全行业综合指数</string>
+    <string name="tab_travel">旅游业</string>
+    <string name="tab_logistics">物流业</string>
+
     <string name="tab_cpi">CPI</string>
     <string name="tab_ppi">PPI</string>
     <string name="tab_pmi">PMI</string>
@@ -117,5 +120,10 @@
     <string name="nav_item_environment">市场环境</string>
     <string name="nav_item_business">行业动态</string>
     <string name="title_activity_news">NewsActivity</string>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_function">FunctionActivity</string>
 
 </resources>

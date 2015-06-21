@@ -111,7 +111,7 @@ public class LoginActivity extends Activity {
     }
 
     private boolean isAutoLogin() {
-        Log.d("--------------------------test if auto login:", String.valueOf(sharedPref.getBoolean(AppConstants.PREF_AUTOLOGIN, false)));
+        Log.d("test if auto login:", String.valueOf(sharedPref.getBoolean(AppConstants.PREF_AUTOLOGIN, false)));
         return sharedPref.getBoolean(AppConstants.PREF_AUTOLOGIN, false);
     }
 

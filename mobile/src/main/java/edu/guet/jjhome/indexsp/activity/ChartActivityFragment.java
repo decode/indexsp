@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.guet.jjhome.indexsp.R;
+import edu.guet.jjhome.indexsp.model.ClimateIndex;
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
@@ -133,27 +134,32 @@ public class ChartActivityFragment extends Fragment {
 
         xVals = new ArrayList<String>();
 
-        DateTime dt = new DateTime();
-        dt = dt.minus(Period.months(20));
-        for (int i = 0; i < 20 ; i++) {
-            valsComp1.add(new Entry(new Random().nextInt(30), i));
-            valsComp2.add(new Entry(new Random().nextInt(30), i));
-            dt = dt.plus(Period.months(1));
-            xVals.add(dt.toString("YYYY-MM")); //为每个对应的i设置相应的label(显示在X轴)
+        ClimateIndex[] indexes = ClimateIndex.getAllIndex();
+        Log.d("climate index length:", String.valueOf(indexes.length));
+
+//        DateTime dt = new DateTime();
+//        dt = dt.minus(Period.months(indexes.length));
+        for (int i = 0; i < indexes.length ; i++) {
+            Log.d("climate index:", indexes[i].sme);
+            valsComp1.add(new Entry(Integer.valueOf(indexes[i].sme), i));
+//            valsComp2.add(new Entry(new Random().nextInt(30), i));
+//            dt = dt.plus(Period.months(1));
+//            xVals.add(dt.toString("YYYY-MM")); //为每个对应的i设置相应的label(显示在X轴)
+            xVals.add(indexes[i].date); //为每个对应的i设置相应的label(显示在X轴)
         }
 
         LineDataSet setComp1 = new LineDataSet(valsComp1, "Index 1");
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(getResources().getColor(R.color.md_red_400));
         setComp1.setLineWidth(4);
-        LineDataSet setComp2 = new LineDataSet(valsComp2, "Index 2");
-        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setComp2.setColor(getResources().getColor(R.color.md_green_400));
-        setComp2.setLineWidth(4);
+//        LineDataSet setComp2 = new LineDataSet(valsComp2, "Index 2");
+//        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+//        setComp2.setColor(getResources().getColor(R.color.md_green_400));
+//        setComp2.setLineWidth(4);
 
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
         dataSets.add(setComp1);
-        dataSets.add(setComp2);
+//        dataSets.add(setComp2);
 
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);
@@ -161,8 +167,8 @@ public class ChartActivityFragment extends Fragment {
 //        chart.setDescription("");
 //        chart.animateX(2000);
         chart.setVisibleXRange(5);
-        chart.setVisibleYRange(30, YAxis.AxisDependency.LEFT);
-        chart.moveViewToX(20);
+//        chart.setVisibleYRange(30, YAxis.AxisDependency.LEFT);
+        chart.moveViewToX(indexes.length);
         chart.setOnChartValueSelectedListener(new ChartValueSelectedListener());
         chart.invalidate(); // refresh
     }

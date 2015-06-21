@@ -24,7 +24,7 @@ import edu.guet.jjhome.indexsp.model.User;
 public class WebService {
 
     private final PersistentCookieStore myCookieStore;
-    public static final String base_url = "http://guetw5.myclub2.com";
+    public static final String base_url = "http://www.gxfwpt.com/Home/Index/Index/";
     String login_url = base_url + "/Account/LogOn";
     String logout_url = base_url + "/Account/LogOff";
     String common_url = base_url + "/NoticeTask/Notice/Common";
@@ -35,6 +35,9 @@ public class WebService {
     String message_created_url = base_url + "/NoticeTask/Notice/Created";
     String message_undo_url = base_url + "/NoticeTask/Notice/Undo";
     String message_created_and_undo_url = base_url + "/NoticeTask/Notice/Created?andundo=true&andundoCheck=on";
+
+    String all = "http://data.gxfwpt.com/api.php?op=data&&sample_name=index&classify=climate_index&loca=%E5%85%A8%E5%9B%BD&cate=%E5%85%A8%E8%A1%8C%E4%B8%9A";
+    String data_query = "http://data.gxfwpt.com/api.php";
 
     private AsyncHttpClient client;
 
@@ -147,7 +150,6 @@ public class WebService {
                 dest_url = message_created_and_undo_url;
                 break;
         }
-        Log.d("message type in webservice", dest_url);
         client.get(dest_url, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -423,7 +425,6 @@ public class WebService {
                     response = new String(responseBody, "UTF-8");
                     WebParser web = new WebParser(response);
                     String message_id = web.parseCreatedMessageId();
-                    Log.d("webservice get messge_id after post:", message_id);
 
                     Message msg = Message.obtain();
                     Bundle b = new Bundle();
@@ -469,7 +470,6 @@ public class WebService {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("webservice remove message_id failed", "");
             }
         });
     }
@@ -483,6 +483,92 @@ public class WebService {
                     response = new String(responseBody, "UTF-8");
                     WebParser web = new WebParser(response);
                     web.parseSendMessage();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    public void fetchData() {
+        Message msg = Message.obtain();
+        msg.what = AppConstants.STAGE_GET_SUCCESS;
+        handler.sendMessage(msg);
+    }
+
+
+    public void businessIndexData() {
+        RequestParams params = new RequestParams();
+        params.put("op", "data");
+        params.put("sample_name", "index");
+        params.put("classify", "climate_index");
+        params.put("loca", "全国");
+
+        params.put("cate", "全行业");
+        getIndexData(AppConstants.INDEX_CLIMATE, params);
+
+        params.put("cate", "旅游行业");
+        getIndexData(AppConstants.INDEX_CLIMATE, params);
+
+        params.put("cate", "物流业");
+        getIndexData(AppConstants.INDEX_CLIMATE, params);
+    }
+
+    public void complexIndexData() {
+        RequestParams params = new RequestParams();
+        params.put("op", "data");
+        params.put("sample_name", "index");
+        params.put("classify", "predict_index");
+
+        // 桂林服务业发展指数
+
+        // 桂林服务业综合发展指数
+        params.put("index", "20");
+        // 服务业发展环境指数
+        params.put("index", "21");
+        // 服务企业经营指数
+        params.put("index", "22");
+        // 服务业发展趋势调查
+        params.put("index", "23");
+
+        // 宏观经济指数
+
+        // 制造业采购经理指数(PMI)
+        params.put("index", "24");
+        // 非制造业PMI
+        params.put("index", "25");
+        // 居民消费者价格指数CPI
+        params.put("index", "26");
+        // 生产价格指数
+        params.put("index", "27");
+
+        getIndexData(AppConstants.INDEX_PREDICT, params);
+    }
+
+    private void getIndexData(final String index_type, RequestParams params) {
+        client.get(data_query, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    response = new String(responseBody, "UTF-8");
+                    Log.d("page", response);
+                    switch (index_type) {
+                        case AppConstants.INDEX_CLIMATE:
+                            WebParser.parseClimateIndex(response);
+                            break;
+                        case AppConstants.INDEX_PREDICT:
+                            WebParser.parsePredictIndex(response);
+                    }
+
+                    Message msg = Message.obtain();
+                    msg.what = AppConstants.STAGE_GET_SUCCESS;
+                    handler.sendMessage(msg);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
