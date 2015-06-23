@@ -63,6 +63,7 @@ public class SplashActivity extends ActionBarActivity {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case AppConstants.STAGE_GET_ERROR:
+                    break;
                 case AppConstants.STAGE_GET_SUCCESS:
                     startActivity(new Intent(SplashActivity.this, FunctionActivity.class));
                     SplashActivity.this.finish();

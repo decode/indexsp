@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
@@ -39,11 +41,14 @@ public class MainActivity extends ActionBarActivity {
     private Drawer.Result drawerResult;
     private ViewPager viewPager;
     private SmartTabLayout viewPagerTab;
+    private Bundle params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        params = getIntent().getExtras();
 
         processView();
     }
@@ -68,12 +73,37 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initTab() {
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                getSupportFragmentManager(), FragmentPagerItems.with(this)
-                .add(R.string.tab_overview, ChartActivityFragment.class)
-                .add(R.string.tab_travel, ChartActivityFragment.class)
-                .add(R.string.tab_logistics, ChartActivityFragment.class)
-                .create());
+        FragmentPagerItemAdapter adapter;
+        Log.d("index_category:", params.getString("index_category"));
+        switch (params.getString("index_category")) {
+            case AppConstants.INDEX_PREDICT:
+                adapter = new FragmentPagerItemAdapter(
+                        getSupportFragmentManager(), FragmentPagerItems.with(this)
+//                        .add(R.string.tab_product_pmi, ChartActivityFragment.class)
+//                        .add(R.string.tab_non_product_pmi, ChartActivityFragment.class)
+//                        .add(R.string.tab_cpi, ChartActivityFragment.class)
+//                        .add(R.string.tab_ppi, ChartActivityFragment.class)
+                        .add(R.string.tab_product_pmi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_PRODUCT_PMI).get())
+                        .add(R.string.tab_non_product_pmi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_NON_PRODUCT_PMI).get())
+                        .add(R.string.tab_cpi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_CPI).get())
+                        .add(R.string.tab_ppi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_PPI).get())
+                        .create());
+                break;
+            case AppConstants.PREDICT_TREND:
+                adapter = new FragmentPagerItemAdapter(
+                        getSupportFragmentManager(), FragmentPagerItems.with(this)
+                        .add(R.string.tab_trend, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_TREND).get())
+                        .create());
+                break;
+            default:
+                adapter = new FragmentPagerItemAdapter(
+                        getSupportFragmentManager(), FragmentPagerItems.with(this)
+                        .add(R.string.tab_overview, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.CLIMATE_ALL).get())
+                        .add(R.string.tab_travel, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.CLIMATE_TRAVEL).get())
+                        .add(R.string.tab_logistics, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.CLIMATE_LOGISTICS).get())
+                        .create());
+                break;
+        }
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
@@ -240,6 +270,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed(){
-        moveTaskToBack(true);
+//        moveTaskToBack(true);
+        this.finish();
     }
 }

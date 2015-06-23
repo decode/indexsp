@@ -56,5 +56,19 @@ public class AppConstants {
 
     public static final String INDEX_CLIMATE = "climate";
     public static final String INDEX_PREDICT = "predict";
+    public static final String INDEX_MACRO = "macro";
 
+    public static final String CLIMATE_ALL = "climate_all";
+    public static final String CLIMATE_TRAVEL = "travel";
+    public static final String CLIMATE_LOGISTICS = "logistics";
+
+    public static final String PREDICT_ALL = "predict_all";
+    public static final String PREDICT_ENVIRONMENT = "environment";
+    public static final String PREDICT_ENTERPRISE = "enterprise";
+    public static final String PREDICT_TREND = "trend";
+
+    public static final String PREDICT_PRODUCT_PMI = "product_pmi";
+    public static final String PREDICT_NON_PRODUCT_PMI = "non_product_pmi";
+    public static final String PREDICT_CPI = "cpi";
+    public static final String PREDICT_PPI = "ppi";
 }

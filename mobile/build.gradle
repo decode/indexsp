@@ -94,4 +94,6 @@ dependencies {
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.1.3@aar'
     compile 'com.github.lecho:hellocharts-android:v1.5.5'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+
+    compile 'me.amiee:nicetab:1.0.0'
 }

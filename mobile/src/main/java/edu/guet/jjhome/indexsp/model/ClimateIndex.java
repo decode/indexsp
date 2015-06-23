@@ -52,4 +52,10 @@ public class ClimateIndex extends Model {
         }
         return climate;
     }
+
+    public static ClimateIndex[] getIndexByParams(String loca, String cate) {
+        List<Model> index_list = new Select().from(ClimateIndex.class).where("loca = ? and cate = ?", loca, cate).orderBy("id ASC").execute();
+        ClimateIndex[] index = new ClimateIndex[index_list.size()];
+        return index_list.toArray(index);
+    }
 }

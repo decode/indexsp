@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import edu.guet.jjhome.indexsp.R;
+import edu.guet.jjhome.indexsp.util.AppConstants;
 
 public class FunctionActivity extends ActionBarActivity {
 
@@ -71,7 +72,9 @@ public class FunctionActivity extends ActionBarActivity {
             Intent intent;
             switch (v.getId()) {
                 case R.id.img_btn_index:
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("index_category", AppConstants.INDEX_CLIMATE);
+                    startActivity(intent);
                     break;
                 case R.id.img_btn_report:
                     intent = new Intent(getBaseContext(), NewsActivity.class);
@@ -86,10 +89,14 @@ public class FunctionActivity extends ActionBarActivity {
                 case R.id.img_btn_answer:
                     break;
                 case R.id.img_btn_marco:
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("index_category", AppConstants.INDEX_PREDICT);
+                    startActivity(intent);
                     break;
                 case R.id.img_btn_trend:
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("index_category", AppConstants.PREDICT_TREND);
+                    startActivity(intent);
                     break;
             }
         }

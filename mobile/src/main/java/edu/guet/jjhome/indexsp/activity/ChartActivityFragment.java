@@ -1,13 +1,11 @@
 package edu.guet.jjhome.indexsp.activity;
 
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -17,28 +15,18 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Highlight;
-
-import org.joda.time.DateTime;
-import org.joda.time.Period;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import edu.guet.jjhome.indexsp.R;
 import edu.guet.jjhome.indexsp.model.ClimateIndex;
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.gesture.ZoomType;
+import edu.guet.jjhome.indexsp.util.AppConstants;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
@@ -50,6 +38,7 @@ public class ChartActivityFragment extends Fragment {
     private View rootView;
     private Axis axisX;
     private ArrayList<String> xVals;
+    private Bundle param;
 
     public ChartActivityFragment() {
     }
@@ -59,11 +48,21 @@ public class ChartActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-//        initChart();
-        initMPChart();
+        param = getArguments();
 
+//        initChart();
+//        initMPChart();
+
+        Toast.makeText(getActivity().getBaseContext(), "click tab", Toast.LENGTH_SHORT).show();
         return rootView;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        initMPChart();
+    }
+
 
 //    private void initChart() {
 //
@@ -125,6 +124,22 @@ public class ChartActivityFragment extends Fragment {
 ////        chart.setCurrentViewportWithAnimation(v);
 //
 //    }
+    private ClimateIndex[] getIndexDataByType() {
+        String index_type = param.getString("index_type");
+        int position = FragmentPagerItem.getPosition(getArguments());
+        Log.d("index_type:", index_type);
+
+        Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+        ClimateIndex[] indexes;
+        switch (index_type) {
+            case AppConstants.PREDICT_PRODUCT_PMI:
+                indexes = ClimateIndex.getIndexByParams("全国", "旅游行业");
+                break;
+            default:
+                indexes = ClimateIndex.getIndexByParams("全国", "全行业");
+        }
+        return indexes;
+    }
 
     private void initMPChart() {
         LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
@@ -134,13 +149,13 @@ public class ChartActivityFragment extends Fragment {
 
         xVals = new ArrayList<String>();
 
-        ClimateIndex[] indexes = ClimateIndex.getAllIndex();
+        ClimateIndex[] indexes = getIndexDataByType();
         Log.d("climate index length:", String.valueOf(indexes.length));
 
 //        DateTime dt = new DateTime();
 //        dt = dt.minus(Period.months(indexes.length));
         for (int i = 0; i < indexes.length ; i++) {
-            Log.d("climate index:", indexes[i].sme);
+//            Log.d("climate index:", indexes[i].sme);
             valsComp1.add(new Entry(Integer.valueOf(indexes[i].sme), i));
 //            valsComp2.add(new Entry(new Random().nextInt(30), i));
 //            dt = dt.plus(Period.months(1));

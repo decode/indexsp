@@ -109,9 +109,12 @@
     <string name="tab_travel">旅游业</string>
     <string name="tab_logistics">物流业</string>
 
+    <string name="tab_product_pmi">制造业PMI</string>
+    <string name="tab_non_product_pmi">非制造业PMI</string>
     <string name="tab_cpi">CPI</string>
     <string name="tab_ppi">PPI</string>
-    <string name="tab_pmi">PMI</string>
+
+    <string name="tab_trend">服务业发展趋势</string>
 
     <string name="nav_item_index">发展指数</string>
     <string name="nav_item_news">新闻</string>
