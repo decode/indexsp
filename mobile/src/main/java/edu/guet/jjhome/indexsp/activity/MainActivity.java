@@ -31,6 +31,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import edu.guet.jjhome.indexsp.R;
 import edu.guet.jjhome.indexsp.model.User;
 import edu.guet.jjhome.indexsp.util.AppConstants;
+import edu.guet.jjhome.indexsp.util.WebService;
 
 public class MainActivity extends ActionBarActivity {
     private Toolbar mToolbar;
@@ -42,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
     private ViewPager viewPager;
     private SmartTabLayout viewPagerTab;
     private Bundle params;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         params = getIntent().getExtras();
+        handler = new Handler(new MsgHandler());
 
         processView();
     }
@@ -69,7 +72,20 @@ public class MainActivity extends ActionBarActivity {
 //            Log.d("all contact size:", String.valueOf(Contact.getAllContact().length));
 //        }
 
+//        initData();
         initTab();
+    }
+
+    private void initData() {
+        switch (params.getString("index_category")) {
+            case AppConstants.PREDICT_TREND:
+            case AppConstants.INDEX_PREDICT:
+            case AppConstants.INDEX_MACRO:
+                break;
+            default:
+                break;
+        }
+        refreshData();
     }
 
     private void initTab() {
@@ -272,5 +288,11 @@ public class MainActivity extends ActionBarActivity {
     public void onBackPressed(){
 //        moveTaskToBack(true);
         this.finish();
+    }
+
+    private void refreshData() {
+        WebService web = new WebService(getBaseContext(), handler);
+        web.complexIndexData();
+        web.businessIndexData();
     }
 }

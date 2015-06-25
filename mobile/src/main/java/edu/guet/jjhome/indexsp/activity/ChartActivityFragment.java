@@ -22,7 +22,9 @@ import java.util.ArrayList;
 
 import edu.guet.jjhome.indexsp.R;
 import edu.guet.jjhome.indexsp.model.ClimateIndex;
+import edu.guet.jjhome.indexsp.model.IndexData;
 import edu.guet.jjhome.indexsp.util.AppConstants;
+import edu.guet.jjhome.indexsp.util.AppUtils;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -53,7 +55,7 @@ public class ChartActivityFragment extends Fragment {
 //        initChart();
 //        initMPChart();
 
-        Toast.makeText(getActivity().getBaseContext(), "click tab", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity().getBaseContext(), "click tab", Toast.LENGTH_SHORT).show();
         return rootView;
     }
 
@@ -124,43 +126,35 @@ public class ChartActivityFragment extends Fragment {
 ////        chart.setCurrentViewportWithAnimation(v);
 //
 //    }
-    private ClimateIndex[] getIndexDataByType() {
+    private IndexData[] getIndexDataByType() {
         String index_type = param.getString("index_type");
-        int position = FragmentPagerItem.getPosition(getArguments());
+//        int position = FragmentPagerItem.getPosition(getArguments());
         Log.d("index_type:", index_type);
 
-        Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
-        ClimateIndex[] indexes;
-        switch (index_type) {
-            case AppConstants.PREDICT_PRODUCT_PMI:
-                indexes = ClimateIndex.getIndexByParams("全国", "旅游行业");
-                break;
-            default:
-                indexes = ClimateIndex.getIndexByParams("全国", "全行业");
-        }
-        return indexes;
+//        Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+        return AppUtils.getIndexDataByType(index_type);
     }
 
     private void initMPChart() {
         LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
 
         ArrayList<Entry> valsComp1 = new ArrayList<Entry>();
-        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+//        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
 
         xVals = new ArrayList<String>();
 
-        ClimateIndex[] indexes = getIndexDataByType();
-        Log.d("climate index length:", String.valueOf(indexes.length));
+        IndexData[] indexes = getIndexDataByType();
+        Log.d("index length:", String.valueOf(indexes.length));
 
 //        DateTime dt = new DateTime();
 //        dt = dt.minus(Period.months(indexes.length));
         for (int i = 0; i < indexes.length ; i++) {
 //            Log.d("climate index:", indexes[i].sme);
-            valsComp1.add(new Entry(Integer.valueOf(indexes[i].sme), i));
+            valsComp1.add(new Entry(Integer.valueOf(indexes[i].getValue()), i));
 //            valsComp2.add(new Entry(new Random().nextInt(30), i));
 //            dt = dt.plus(Period.months(1));
 //            xVals.add(dt.toString("YYYY-MM")); //为每个对应的i设置相应的label(显示在X轴)
-            xVals.add(indexes[i].date); //为每个对应的i设置相应的label(显示在X轴)
+            xVals.add(indexes[i].getDate()); //为每个对应的i设置相应的label(显示在X轴)
         }
 
         LineDataSet setComp1 = new LineDataSet(valsComp1, "Index 1");

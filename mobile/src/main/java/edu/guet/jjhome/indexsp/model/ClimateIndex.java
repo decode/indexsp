@@ -10,7 +10,7 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 @Table(name = "ClimateIndex")
-public class ClimateIndex extends Model {
+public class ClimateIndex extends Model implements IndexData {
 
     @Column(name = "name")
     public String name;
@@ -36,6 +36,9 @@ public class ClimateIndex extends Model {
     @Column(name = "graph")
     public String graph;
 
+    @Column(name = "seq")
+    public String seq;
+
     public static ClimateIndex[] getAllIndex() {
         List<Model> index_list = new Select().from(ClimateIndex.class).orderBy("date ASC").execute();
         ClimateIndex[] index = new ClimateIndex[index_list.size()];
@@ -57,5 +60,19 @@ public class ClimateIndex extends Model {
         List<Model> index_list = new Select().from(ClimateIndex.class).where("loca = ? and cate = ?", loca, cate).orderBy("id ASC").execute();
         ClimateIndex[] index = new ClimateIndex[index_list.size()];
         return index_list.toArray(index);
+    }
+
+    public String getValue() {
+        return sme;
+    }
+
+    @Override
+    public String getDate() {
+        return date;
+    }
+
+    @Override
+    public String getSeq() {
+        return seq;
     }
 }

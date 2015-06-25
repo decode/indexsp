@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import edu.guet.jjhome.indexsp.model.ClimateIndex;
 import edu.guet.jjhome.indexsp.model.Contact;
 import edu.guet.jjhome.indexsp.model.Item;
+import edu.guet.jjhome.indexsp.model.PredictIndex;
 import edu.guet.jjhome.indexsp.model.User;
 
 public class WebParser {
@@ -289,7 +290,9 @@ public class WebParser {
 
                 index = smeArray.getJSONObject(i);
                 date = index.getString("date");
-                ind = ClimateIndex.fetch(date, loca, cate);
+//                ind = ClimateIndex.fetch(date, loca, cate);
+                ind = new ClimateIndex();
+                ind.seq = String.valueOf(i);
 
                 ind.date = date;
                 ind.sme = index.getString("sme");
@@ -308,27 +311,43 @@ public class WebParser {
     }
 
 
-    public static void parsePredictIndex(String json) {
+    public static void parsePredictIndex(String json, String index_type) {
         try {
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray predictArray = jsonObject.getJSONArray("predict");
 //            String date, sme, ratio, type, graph;
             JSONObject index;
-            ClimateIndex ind;
+            PredictIndex ind;
             for(int i=0; i<predictArray.length(); i++) {
-                ind = new ClimateIndex();
+                ind = new PredictIndex();
 
                 index = predictArray.getJSONObject(i);
                 ind.date = index.getString("date");
-                ind.sme = index.getString("sme");
-                ind.ratio = index.getString("ratio");
-                ind.type = index.getString("type");
-                ind.graph = index.getString("graph");
+                ind.forecast = index.getString("forecast");
+                ind.real = index.getString("real");
+                ind.real3 = index.getString("real3");
+                ind.real4 = index.getString("real4");
+                ind.real5 = index.getString("real5");
+                ind.type = index_type;
+                ind.seq = String.valueOf(i);
                 ind.save();
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void parseReport() {
+        Elements report_lists = doc.select("div.news-list-box > ul.news-list > li");
+        String url, title, time;
+        for (Element report :
+                report_lists) {
+            Element r = report.select("a").first();
+            url = r.attr("href");
+            title = r.text().trim();
+            time = report.select("span").first().text().trim();
+            Log.d("report info:", url + "|" + title + "|" + time);
         }
     }
 }

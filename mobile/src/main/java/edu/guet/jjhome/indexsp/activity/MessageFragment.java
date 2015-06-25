@@ -85,7 +85,7 @@ public class MessageFragment extends Fragment {
 
         itemAdapter = new ItemAdapter(getActivity().getBaseContext(), items);
 
-//        handler = new Handler(new MsgHandler());
+        handler = new Handler(new MsgHandler());
     }
 
     @Override
@@ -119,6 +119,9 @@ public class MessageFragment extends Fragment {
 //        Toast.makeText(getActivity().getBaseContext(), R.string.action_refresh_status, Toast.LENGTH_SHORT).show();
 //        web = new WebService(getActivity().getBaseContext(), handler);
 //        web.fetchContent(msg_type);
+
+        web = new WebService(getActivity().getBaseContext(), handler);
+        web.fetcchReport();
 
         return rootView;
     }

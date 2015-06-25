@@ -27,12 +27,13 @@ public class SplashActivity extends ActionBarActivity {
             public void run() {
                 attemptFetch();
             }
-        }, 2000);
+        }, 1000);
     }
 
     private void attemptFetch() {
         WebService web = new WebService(getBaseContext(), handler);
         web.businessIndexData();
+        web.complexIndexData();
     }
 
     @Override

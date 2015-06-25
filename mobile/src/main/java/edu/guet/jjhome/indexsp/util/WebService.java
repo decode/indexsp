@@ -39,6 +39,8 @@ public class WebService {
     String all = "http://data.gxfwpt.com/api.php?op=data&&sample_name=index&classify=climate_index&loca=%E5%85%A8%E5%9B%BD&cate=%E5%85%A8%E8%A1%8C%E4%B8%9A";
     String data_query = "http://data.gxfwpt.com/api.php";
 
+    String report_url = "http://www.gxfwpt.com/Home/Index/Index/news/category_id/40.html";
+
     private AsyncHttpClient client;
 
     private Context context;
@@ -495,13 +497,6 @@ public class WebService {
         });
     }
 
-    public void fetchData() {
-        Message msg = Message.obtain();
-        msg.what = AppConstants.STAGE_GET_SUCCESS;
-        handler.sendMessage(msg);
-    }
-
-
     public void businessIndexData() {
         RequestParams params = new RequestParams();
         params.put("op", "data");
@@ -509,14 +504,16 @@ public class WebService {
         params.put("classify", "climate_index");
         params.put("loca", "全国");
 
-        params.put("cate", "全行业");
-        getIndexData(AppConstants.INDEX_CLIMATE, params);
+        String[] index_types = {
+                AppConstants.CLIMATE_ALL,
+                AppConstants.CLIMATE_TRAVEL,
+                AppConstants.CLIMATE_LOGISTICS
+        };
 
-        params.put("cate", "旅游行业");
-        getIndexData(AppConstants.INDEX_CLIMATE, params);
-
-        params.put("cate", "物流业");
-        getIndexData(AppConstants.INDEX_CLIMATE, params);
+        for (String index_type : index_types) {
+            params.put("cate", index_type);
+            getIndexData(AppConstants.INDEX_CLIMATE, params);
+        }
     }
 
     public void complexIndexData() {
@@ -525,44 +522,39 @@ public class WebService {
         params.put("sample_name", "index");
         params.put("classify", "predict_index");
 
-        // 桂林服务业发展指数
-
-        // 桂林服务业综合发展指数
-        params.put("index", "20");
-        // 服务业发展环境指数
-        params.put("index", "21");
-        // 服务企业经营指数
-        params.put("index", "22");
-        // 服务业发展趋势调查
-        params.put("index", "23");
-
-        // 宏观经济指数
-
-        // 制造业采购经理指数(PMI)
-        params.put("index", "24");
-        // 非制造业PMI
-        params.put("index", "25");
-        // 居民消费者价格指数CPI
-        params.put("index", "26");
-        // 生产价格指数
-        params.put("index", "27");
-
-        getIndexData(AppConstants.INDEX_PREDICT, params);
+        String[] index_types = {
+                AppConstants.PREDICT_ALL,
+                AppConstants.PREDICT_ENVIRONMENT,
+                AppConstants.PREDICT_ENTERPRISE,
+                AppConstants.PREDICT_TREND,
+                AppConstants.PREDICT_NON_PRODUCT_PMI,
+                AppConstants.PREDICT_PRODUCT_PMI,
+                AppConstants.PREDICT_CPI,
+                AppConstants.PREDICT_PPI
+        };
+        for (String index_type : index_types) {
+            params.put("index", index_type);
+            getIndexData(AppConstants.INDEX_PREDICT, index_type, params);
+        }
     }
 
-    private void getIndexData(final String index_type, RequestParams params) {
+    private void getIndexData(final String index_category, final RequestParams params) {
+        getIndexData(index_category, null, params);
+    }
+    private void getIndexData(final String index_category, final String index_type, final RequestParams params) {
         client.get(data_query, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
                     response = new String(responseBody, "UTF-8");
                     Log.d("page", response);
-                    switch (index_type) {
+                    switch (index_category) {
                         case AppConstants.INDEX_CLIMATE:
                             WebParser.parseClimateIndex(response);
                             break;
                         case AppConstants.INDEX_PREDICT:
-                            WebParser.parsePredictIndex(response);
+                            if (index_type != null)
+                                WebParser.parsePredictIndex(response, index_type);
                     }
 
                     Message msg = Message.obtain();
@@ -572,6 +564,33 @@ public class WebService {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Message msg = Message.obtain();
+                msg.what = AppConstants.STAGE_GET_ERROR;
+                handler.sendMessage(msg);
+            }
+        });
+    }
+
+    public void fetcchReport() {
+        client.get(report_url, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    response = new String(responseBody, "UTF-8");
+                    WebParser web = new WebParser(response);
+                    web.parseReport();
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Message msg = Message.obtain();
+                msg.what = AppConstants.STAGE_GET_SUCCESS;
+                handler.sendMessage(msg);
             }
 
             @Override

@@ -58,17 +58,29 @@ public class AppConstants {
     public static final String INDEX_PREDICT = "predict";
     public static final String INDEX_MACRO = "macro";
 
-    public static final String CLIMATE_ALL = "climate_all";
-    public static final String CLIMATE_TRAVEL = "travel";
-    public static final String CLIMATE_LOGISTICS = "logistics";
+    public static final String CLIMATE_ALL = "全行业";
+    public static final String CLIMATE_TRAVEL = "旅游行业";
+    public static final String CLIMATE_LOGISTICS = "物流业";
 
-    public static final String PREDICT_ALL = "predict_all";
-    public static final String PREDICT_ENVIRONMENT = "environment";
-    public static final String PREDICT_ENTERPRISE = "enterprise";
-    public static final String PREDICT_TREND = "trend";
+    // 桂林服务业发展指数
 
-    public static final String PREDICT_PRODUCT_PMI = "product_pmi";
-    public static final String PREDICT_NON_PRODUCT_PMI = "non_product_pmi";
-    public static final String PREDICT_CPI = "cpi";
-    public static final String PREDICT_PPI = "ppi";
+    // 桂林服务业综合发展指数
+    public static final String PREDICT_ALL = "20";
+    // 服务业发展环境指数
+    public static final String PREDICT_ENVIRONMENT = "21";
+    // 服务企业经营指数
+    public static final String PREDICT_ENTERPRISE = "22";
+    // 服务业发展趋势调查
+    public static final String PREDICT_TREND = "23";
+
+    // 宏观经济指数
+
+    // 制造业采购经理指数(PMI)
+    public static final String PREDICT_PRODUCT_PMI = "24";
+    // 非制造业PMI
+    public static final String PREDICT_NON_PRODUCT_PMI = "25";
+    // 居民消费者价格指数CPI
+    public static final String PREDICT_CPI = "26";
+    // 生产价格指数
+    public static final String PREDICT_PPI = "27";
 }

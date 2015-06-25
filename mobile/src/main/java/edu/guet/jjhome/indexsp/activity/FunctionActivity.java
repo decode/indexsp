@@ -1,6 +1,8 @@
 package edu.guet.jjhome.indexsp.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.widget.ImageButton;
 
 import edu.guet.jjhome.indexsp.R;
 import edu.guet.jjhome.indexsp.util.AppConstants;
+import edu.guet.jjhome.indexsp.util.WebService;
 
 public class FunctionActivity extends ActionBarActivity {
 
@@ -81,13 +84,6 @@ public class FunctionActivity extends ActionBarActivity {
                     intent.putExtra("msg_type", getString(R.string.nav_item_report));
                     startActivity(intent);
                     break;
-                case R.id.img_btn_policy:
-                    intent = new Intent(getBaseContext(), NewsActivity.class);
-                    intent.putExtra("msg_type", getString(R.string.nav_item_policy));
-                    startActivity(intent);
-                    break;
-                case R.id.img_btn_answer:
-                    break;
                 case R.id.img_btn_marco:
                     intent = new Intent(getBaseContext(), MainActivity.class);
                     intent.putExtra("index_category", AppConstants.INDEX_PREDICT);
@@ -98,7 +94,19 @@ public class FunctionActivity extends ActionBarActivity {
                     intent.putExtra("index_category", AppConstants.PREDICT_TREND);
                     startActivity(intent);
                     break;
+                case R.id.img_btn_policy:
+                    intent = new Intent(getBaseContext(), NewsActivity.class);
+                    intent.putExtra("msg_type", getString(R.string.nav_item_policy));
+                    startActivity(intent);
+                    break;
+                case R.id.img_btn_answer:
+                    break;
             }
         }
     };
+
+    @Override
+    public void onBackPressed(){
+        moveTaskToBack(true);
+    }
 }

@@ -12,6 +12,10 @@ import org.apache.http.cookie.Cookie;
 
 import java.util.List;
 
+import edu.guet.jjhome.indexsp.model.ClimateIndex;
+import edu.guet.jjhome.indexsp.model.IndexData;
+import edu.guet.jjhome.indexsp.model.PredictIndex;
+
 public class AppUtils {
     /**
      * Retrieve the account stored for the application.
@@ -61,4 +65,30 @@ public class AppUtils {
 
         CookieSyncManager.getInstance().sync();
     }
+
+    public static IndexData[] getIndexDataByType(String index_type) {
+        IndexData[] indexes;
+        switch (index_type) {
+            case AppConstants.PREDICT_PRODUCT_PMI:
+            case AppConstants.PREDICT_NON_PRODUCT_PMI:
+            case AppConstants.PREDICT_CPI:
+            case AppConstants.PREDICT_PPI:
+            case AppConstants.PREDICT_ALL:
+            case AppConstants.PREDICT_ENVIRONMENT:
+            case AppConstants.PREDICT_ENTERPRISE:
+            case AppConstants.PREDICT_TREND:
+                indexes = PredictIndex.getIndexByParams(index_type);
+                break;
+            case AppConstants.CLIMATE_TRAVEL:
+            case AppConstants.CLIMATE_LOGISTICS:
+                indexes = ClimateIndex.getIndexByParams("全国", index_type);
+                break;
+            default:
+                indexes = ClimateIndex.getIndexByParams("全国", AppConstants.CLIMATE_ALL);
+        }
+        return indexes;
+    }
+
+
+
 }
