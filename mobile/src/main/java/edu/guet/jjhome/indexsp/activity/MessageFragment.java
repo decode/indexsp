@@ -20,9 +20,6 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.guet.jjhome.indexsp.R;
@@ -67,22 +64,23 @@ public class MessageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ArrayList<Item> items = new ArrayList<>();
-        Item item;
-        for (int i=1; i<10; i++) {
-            item = new Item("sender" + String.valueOf(i), "标题" + String.valueOf(i), "content" + String.valueOf(i), new DateTime().getMillis());
-            item.msg_type = "report";
-//            item.save();
-            items.add(item);
-        }
+//        Item item;
+//        for (int i=1; i<10; i++) {
+//            item = new Item("sender" + String.valueOf(i), "标题" + String.valueOf(i), "content" + String.valueOf(i), new DateTime().getMillis());
+//            item.msg_type = "report";
+////            item.save();
+//            items.add(item);
+//        }
 
-        Log.d("item size:", String.valueOf(items.size()));
 
         msg_type = getActivity().getIntent().getStringExtra("msg_type");
+        Log.d("msg_type:", msg_type);
         if (msg_type == null) {
-            msg_type = "report";
+            msg_type = AppConstants.WEB_REPORT;
         }
 
+        List<Item> items = Item.getItemsByType(msg_type);
+        Log.d("item size:", String.valueOf(items.size()));
         itemAdapter = new ItemAdapter(getActivity().getBaseContext(), items);
 
         handler = new Handler(new MsgHandler());
@@ -121,7 +119,7 @@ public class MessageFragment extends Fragment {
 //        web.fetchContent(msg_type);
 
         web = new WebService(getActivity().getBaseContext(), handler);
-        web.fetcchReport();
+        web.fetcchWebContent(msg_type);
 
         return rootView;
     }
@@ -156,7 +154,8 @@ public class MessageFragment extends Fragment {
                     txt_status.setVisibility(View.VISIBLE);
                     break;
                 case AppConstants.STAGE_GET_SUCCESS:
-                    List<Item> items = Item.getItemsByTypeAndStatus(msg_type, read_status);
+//                    List<Item> items = Item.getItemsByTypeAndStatus(msg_type, read_status);
+                    List<Item> items = Item.getItemsByType(msg_type);
                     Log.d("success, test msg_type", msg_type);
 
                     if (items.size() > 0) {

@@ -154,11 +154,11 @@ public class Item extends Model implements Serializable {
         return new Select().from(Item.class).where("msg_type = ?", msg_type).orderBy("sent_at DESC").execute();
     }
 
-    public static Item fetchItem(String message_id) {
-        Item item = new Select().from(Item.class).where("message_id = ?", message_id).orderBy("id ASC").executeSingle();
+    public static Item fetchItem(String url) {
+        Item item = new Select().from(Item.class).where("source = ?", url).orderBy("id ASC").executeSingle();
         if (item == null) {
             item = new Item();
-            item.message_id = message_id;
+            item.source = url;
             Log.d("Not find existed item", "create new");
         }
         return item;

@@ -24,12 +24,12 @@ import edu.guet.jjhome.indexsp.model.User;
 public class WebService {
 
     private final PersistentCookieStore myCookieStore;
-    public static final String base_url = "http://www.gxfwpt.com/Home/Index/Index/";
+    public static final String base_url = "http://www.gxfwpt.com";
     String login_url = base_url + "/Account/LogOn";
     String logout_url = base_url + "/Account/LogOff";
     String common_url = base_url + "/NoticeTask/Notice/Common";
     String person_url = base_url + "/NoticeTask/Notice/AboutMe";
-    String message_prefix_url = base_url + "/NoticeTask/Notice/Details/";
+    String message_prefix_url = base_url;
     String message_create_url = base_url + "/NoticeTask/Notice/Create";
     String message_send_url = base_url + "/NoticeTask/Notice/SendNotice";
     String message_created_url = base_url + "/NoticeTask/Notice/Created";
@@ -39,7 +39,10 @@ public class WebService {
     String all = "http://data.gxfwpt.com/api.php?op=data&&sample_name=index&classify=climate_index&loca=%E5%85%A8%E5%9B%BD&cate=%E5%85%A8%E8%A1%8C%E4%B8%9A";
     String data_query = "http://data.gxfwpt.com/api.php";
 
-    String report_url = "http://www.gxfwpt.com/Home/Index/Index/news/category_id/40.html";
+    String report_url = base_url + "/Home/Index/Index/news/category_id/40.html";
+    String policy_url = base_url + "/Home/Index/Index/news/category_id/41.html";
+    String environment_url = base_url + "/Home/Index/Index/news/category_id/42.html";
+    String answer_url = base_url + "/Home/Index/Index/news/category_id/45.html";
 
     private AsyncHttpClient client;
 
@@ -575,15 +578,33 @@ public class WebService {
         });
     }
 
-    public void fetcchReport() {
-        client.get(report_url, new AsyncHttpResponseHandler() {
+    public void fetcchWebContent(final String content_type) {
+        String url;
+        switch (content_type) {
+            case AppConstants.WEB_REPORT:
+                url = report_url;
+                break;
+            case AppConstants.WEB_ENVIRONMENT:
+                url = environment_url;
+                break;
+            case AppConstants.WEB_POLICY:
+                url = policy_url;
+                break;
+            case AppConstants.WEB_ANSWER:
+                url = answer_url;
+                break;
+            default:
+                url = report_url;
+                break;
+        }
+        client.get(url, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
                     response = new String(responseBody, "UTF-8");
                     WebParser web = new WebParser(response);
-                    web.parseReport();
+                    web.parseWebContent(content_type);
 
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();

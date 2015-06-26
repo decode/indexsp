@@ -82,7 +82,7 @@ public class DetailsActivity extends ActionBarActivity {
             if (item.content.length() < 1) {
                 handler = new Handler(new MsgHandler());
                 WebService web = new WebService(getBaseContext(), handler);
-                message_id = item.message_id;
+                message_id = item.source;
                 web.readMessage(message_id);
             }
             else {

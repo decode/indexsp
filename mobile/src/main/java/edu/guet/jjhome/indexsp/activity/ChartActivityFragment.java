@@ -161,11 +161,11 @@ public class ChartActivityFragment extends Fragment {
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(getResources().getColor(R.color.md_red_400));
         setComp1.setLineWidth(4);
+        setComp1.setDrawCubic(true);
 //        LineDataSet setComp2 = new LineDataSet(valsComp2, "Index 2");
 //        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
 //        setComp2.setColor(getResources().getColor(R.color.md_green_400));
 //        setComp2.setLineWidth(4);
-
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
         dataSets.add(setComp1);
 //        dataSets.add(setComp2);

@@ -10,7 +10,7 @@ public class AppConstants {
     public static final String PREF_SELECTED_ACCOUNT_EMAIL = "AccountEmail";
     public static final String APP_PREF_NM = "AccountPreferences";
 
-    public static final String DATE_FORMAT_SOURCE = "yyyy/M/d H:mm";
+    public static final String DATE_FORMAT_SOURCE = "yyyy-MM-dd";
     public static final String DATE_FORMAT_DEST = "yyyy/MM/dd HH:mm";
     public static final String DATE_FORMAT_DEST_SIMPLE = "M月d日";
     public static final int DAY_BEFORE = 4;
@@ -83,4 +83,9 @@ public class AppConstants {
     public static final String PREDICT_CPI = "26";
     // 生产价格指数
     public static final String PREDICT_PPI = "27";
+
+    public static final String WEB_REPORT = "运行报告";
+    public static final String WEB_POLICY = "发展政策";
+    public static final String WEB_ENVIRONMENT = "市场环境";
+    public static final String WEB_ANSWER = "问题解答";
 }

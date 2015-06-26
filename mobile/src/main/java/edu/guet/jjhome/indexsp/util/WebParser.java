@@ -142,19 +142,21 @@ public class WebParser {
 
     public Item parseMessageDetail(String message_id) {
         Item item = Item.fetchItem(message_id);
-        Element content = doc.select("div.notice-body").first();
-//        item.content = content.text();
-        String page = content.html().replace("/NoticeTask/", WebService.base_url + "/NoticeTask/");
-        Log.d("html page: ", content.html());
+        Element content = doc.select("div.news-content > div").last();
+        String page = content.html();
         item.content = page;
+//        item.content = content.text();
+//        String page = content.html().replace("/NoticeTask/", WebService.base_url + "/NoticeTask/");
+//        Log.d("html page: ", content.html());
+//        item.content = page;
 
-        Elements info = doc.select("span.label.label-success");
-        ArrayList<String> directions = new ArrayList<>();
-        for(Element direction : info) {
-            Log.d("parseMessageDetail", direction.text());
-            directions.add(direction.text());
-        }
-        item.directions =  directions.toArray(new String[directions.size()]).toString();
+//        Elements info = doc.select("span.label.label-success");
+//        ArrayList<String> directions = new ArrayList<>();
+//        for(Element direction : info) {
+//            Log.d("parseMessageDetail", direction.text());
+//            directions.add(direction.text());
+//        }
+//        item.directions =  directions.toArray(new String[directions.size()]).toString();
 
 //        Element unread_role = doc.select("div.notice-trace > div.alert.alert-error").first();
 //        Element read_role = doc.select("div.notice-trace > div.alert.alert-success").first();
@@ -338,16 +340,22 @@ public class WebParser {
         }
     }
 
-    public void parseReport() {
+    public void parseWebContent(String content_type) {
         Elements report_lists = doc.select("div.news-list-box > ul.news-list > li");
         String url, title, time;
-        for (Element report :
-                report_lists) {
+        Item item;
+        for (Element report : report_lists) {
             Element r = report.select("a").first();
             url = r.attr("href");
             title = r.text().trim();
             time = report.select("span").first().text().trim();
             Log.d("report info:", url + "|" + title + "|" + time);
+
+            item = Item.fetchItem(url);
+            item.title = title;
+            item.sent_at = convertDate(time);
+            item.msg_type = content_type;
+            item.save();
         }
     }
 }

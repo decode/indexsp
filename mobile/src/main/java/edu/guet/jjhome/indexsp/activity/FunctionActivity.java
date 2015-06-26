@@ -81,7 +81,7 @@ public class FunctionActivity extends ActionBarActivity {
                     break;
                 case R.id.img_btn_report:
                     intent = new Intent(getBaseContext(), NewsActivity.class);
-                    intent.putExtra("msg_type", getString(R.string.nav_item_report));
+                    intent.putExtra("msg_type", AppConstants.WEB_REPORT);
                     startActivity(intent);
                     break;
                 case R.id.img_btn_marco:
@@ -96,10 +96,13 @@ public class FunctionActivity extends ActionBarActivity {
                     break;
                 case R.id.img_btn_policy:
                     intent = new Intent(getBaseContext(), NewsActivity.class);
-                    intent.putExtra("msg_type", getString(R.string.nav_item_policy));
+                    intent.putExtra("msg_type", AppConstants.WEB_POLICY);
                     startActivity(intent);
                     break;
                 case R.id.img_btn_answer:
+                    intent = new Intent(getBaseContext(), NewsActivity.class);
+                    intent.putExtra("msg_type", AppConstants.WEB_ANSWER);
+                    startActivity(intent);
                     break;
             }
         }
