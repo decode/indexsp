@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -62,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        initDrawer();
+//        initDrawer();
 
 //        if (User.currentUser().position_id == null || Contact.getAllContact().length == 0) {
 //            Handler handler = new Handler(new MsgHandler());
@@ -72,20 +74,25 @@ public class MainActivity extends ActionBarActivity {
 //            Log.d("all contact size:", String.valueOf(Contact.getAllContact().length));
 //        }
 
-//        initData();
+        initTitle();
         initTab();
     }
 
-    private void initData() {
+    private void initTitle() {
         switch (params.getString("index_category")) {
             case AppConstants.PREDICT_TREND:
+                getSupportActionBar().setTitle(R.string.nav_item_trend);
+                break;
+            case AppConstants.INDEX_CLIMATE:
+                getSupportActionBar().setTitle(R.string.nav_item_index);
+                break;
             case AppConstants.INDEX_PREDICT:
-            case AppConstants.INDEX_MACRO:
+                getSupportActionBar().setTitle(R.string.nav_item_macro);
                 break;
             default:
                 break;
         }
-        refreshData();
+//        refreshData();
     }
 
     private void initTab() {
@@ -95,10 +102,6 @@ public class MainActivity extends ActionBarActivity {
             case AppConstants.INDEX_PREDICT:
                 adapter = new FragmentPagerItemAdapter(
                         getSupportFragmentManager(), FragmentPagerItems.with(this)
-//                        .add(R.string.tab_product_pmi, ChartActivityFragment.class)
-//                        .add(R.string.tab_non_product_pmi, ChartActivityFragment.class)
-//                        .add(R.string.tab_cpi, ChartActivityFragment.class)
-//                        .add(R.string.tab_ppi, ChartActivityFragment.class)
                         .add(R.string.tab_product_pmi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_PRODUCT_PMI).get())
                         .add(R.string.tab_non_product_pmi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_NON_PRODUCT_PMI).get())
                         .add(R.string.tab_cpi, ChartActivityFragment.class, new Bundler().putString("index_type", AppConstants.PREDICT_CPI).get())
@@ -152,11 +155,13 @@ public class MainActivity extends ActionBarActivity {
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.nav_item_index),
+                        new PrimaryDrawerItem().withName(R.string.nav_item_macro),
+                        new PrimaryDrawerItem().withName(R.string.nav_item_trend),
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.nav_item_report),
                         new SecondaryDrawerItem().withName(R.string.nav_item_policy),
-                        new SecondaryDrawerItem().withName(R.string.nav_item_environment),
-                        new SecondaryDrawerItem().withName(R.string.nav_item_business),
+                        new SecondaryDrawerItem().withName(R.string.nav_item_answer),
+//                        new SecondaryDrawerItem().withName(R.string.nav_item_business),
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.nav_item_about)
                 )
@@ -168,35 +173,42 @@ public class MainActivity extends ActionBarActivity {
                         switch (position) {
                             case 0:
                                 backupPosition(position);
-                                break;
-                            case 1:
-                                break;
-                            case 2:
-                                drawerResult.setSelection(0);
-                                intent = new Intent(getBaseContext(), NewsActivity.class);
-                                intent.putExtra("msg_type", getString(R.string.nav_item_report));
+                                intent = new Intent(getBaseContext(), MainActivity.class);
+                                intent.putExtra("index_category", AppConstants.INDEX_CLIMATE);
                                 startActivity(intent);
                                 break;
-                            case 3:
-                                drawerResult.setSelection(0);
-                                intent = new Intent(getBaseContext(), NewsActivity.class);
-                                intent.putExtra("msg_type", getString(R.string.nav_item_policy));
+                            case 1:
+                                backupPosition(position);
+                                intent = new Intent(getBaseContext(), MainActivity.class);
+                                intent.putExtra("index_category", AppConstants.INDEX_PREDICT);
+                                startActivity(intent);
+                                break;
+                            case 2:
+                                backupPosition(position);
+                                intent = new Intent(getBaseContext(), MainActivity.class);
+                                intent.putExtra("index_category", AppConstants.PREDICT_TREND);
                                 startActivity(intent);
                                 break;
                             case 4:
-                                drawerResult.setSelection(0);
+                                restorePosition();
                                 intent = new Intent(getBaseContext(), NewsActivity.class);
-                                intent.putExtra("msg_type", getString(R.string.nav_item_environment));
+                                intent.putExtra("msg_type", AppConstants.WEB_REPORT);
                                 startActivity(intent);
                                 break;
                             case 5:
-                                drawerResult.setSelection(0);
+                                restorePosition();
                                 intent = new Intent(getBaseContext(), NewsActivity.class);
-                                intent.putExtra("msg_type", getString(R.string.nav_item_business));
+                                intent.putExtra("msg_type", AppConstants.WEB_POLICY);
                                 startActivity(intent);
                                 break;
-                            case 7:
-                                drawerResult.setSelection(0);
+                            case 6:
+                                restorePosition();
+                                intent = new Intent(getBaseContext(), NewsActivity.class);
+                                intent.putExtra("msg_type", AppConstants.WEB_ANSWER);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                restorePosition();
                                 showAbout();
                                 break;
                         }
@@ -243,25 +255,25 @@ public class MainActivity extends ActionBarActivity {
                 .show();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.global, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.action_settings) {
-//            startActivity(new Intent(getBaseContext(), SettingsActivity.class));
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.global, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id) {
+            default:
+                this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private class MsgHandler implements Handler.Callback {
         @Override

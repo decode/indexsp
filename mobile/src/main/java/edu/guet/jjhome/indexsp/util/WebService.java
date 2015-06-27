@@ -578,7 +578,7 @@ public class WebService {
         });
     }
 
-    public void fetcchWebContent(final String content_type) {
+    public void fetchWebContent(final String content_type) {
         String url;
         switch (content_type) {
             case AppConstants.WEB_REPORT:
@@ -616,7 +616,9 @@ public class WebService {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                Message msg = Message.obtain();
+                msg.what = AppConstants.STAGE_GET_ERROR;
+                handler.sendMessage(msg);
             }
         });
     }

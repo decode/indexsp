@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ public class FunctionActivity extends ActionBarActivity {
     private ImageButton btn_answer;
     private ImageButton btn_marco;
     private ImageButton btn_trend;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,12 @@ public class FunctionActivity extends ActionBarActivity {
     }
 
     private void processView() {
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         btn_index = (ImageButton) findViewById(R.id.img_btn_index);
         btn_report = (ImageButton) findViewById(R.id.img_btn_report);
         btn_policy = (ImageButton) findViewById(R.id.img_btn_policy);

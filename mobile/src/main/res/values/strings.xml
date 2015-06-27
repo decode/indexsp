@@ -43,9 +43,7 @@
     <string name="stage_undo_success">撤销消息成功</string>
     <string name="stage_logout_success">注销成功</string>
     <string name="stage_refresh">正在更新...</string>
-    <string name="title_activity_message">MessageActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_create_message">发消息</string>
 
     <string name="action_choose">选择</string>
 
@@ -90,7 +88,6 @@
 
     <string name="list_no_data">没有数据</string>
 
-    <string name="title_activity_help">帮助/反馈</string>
     <string name="help_title">帮助/反馈</string>
 
     <string name="dialog_about">关于本软件</string>
@@ -103,7 +100,6 @@
     <string name="pref_desc_tail">开启消息标题尾巴后，所有消息的标题后面都会附加用户自定义的信息，如发送人名字，用来标识发送者</string>
     <string name="pref_desc_message_tail">如果不设置尾巴信息，则默认为用户名</string>
     <string name="hint_message_option">发送选项</string>
-    <string name="title_activity_chart">ChartActivity</string>
 
     <string name="tab_overview">全行业综合指数</string>
     <string name="tab_travel">旅游业</string>
@@ -116,17 +112,24 @@
 
     <string name="tab_trend">服务业发展趋势</string>
 
-    <string name="nav_item_index">发展指数</string>
+    <string name="nav_item_index">运行指数</string>
+    <string name="nav_item_macro">宏观指数</string>
+    <string name="nav_item_trend">趋势预测</string>
     <string name="nav_item_news">新闻</string>
     <string name="nav_item_report">运行报告</string>
     <string name="nav_item_policy">发展政策</string>
     <string name="nav_item_environment">市场环境</string>
     <string name="nav_item_business">行业动态</string>
-    <string name="title_activity_news">NewsActivity</string>
-
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="nav_item_answer">问题解答</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_function">FunctionActivity</string>
+    <string name="action_home">主页</string>
 
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_create_message">发消息</string>
+    <string name="title_activity_help">帮助/反馈</string>
+    <string name="title_activity_chart">ChartActivity</string>
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="title_activity_splash">桂林市服务业经济运行监测</string>
+    <string name="title_activity_function">桂林市服务业经济运行监测系统</string>
 </resources>

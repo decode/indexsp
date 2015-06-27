@@ -119,7 +119,7 @@ public class MessageFragment extends Fragment {
 //        web.fetchContent(msg_type);
 
         web = new WebService(getActivity().getBaseContext(), handler);
-        web.fetcchWebContent(msg_type);
+        web.fetchWebContent(msg_type);
 
         return rootView;
     }
@@ -200,8 +200,8 @@ public class MessageFragment extends Fragment {
         switch (id) {
             case R.id.action_overview_refresh:
                 Toast.makeText(getActivity(), R.string.action_refresh, Toast.LENGTH_SHORT).show();
-//                web = new WebService(getActivity().getBaseContext(), handler);
-//                web.fetchContent(msg_type);
+                web = new WebService(getActivity().getBaseContext(), handler);
+                web.fetchWebContent(msg_type);
                 break;
             default:
                 getActivity().onBackPressed();
