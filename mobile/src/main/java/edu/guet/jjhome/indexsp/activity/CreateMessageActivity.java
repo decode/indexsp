@@ -377,7 +377,7 @@ public class CreateMessageActivity extends ActionBarActivity implements Validato
                 case AppConstants.STAGE_GET_ERROR:
                     break;
                 case AppConstants.STAGE_GET_SUCCESS:
-                    Log.d("success, parse create message", "----------------------");
+                    Log.d("success, parse message", "----------------------");
                     break;
                 case AppConstants.STAGE_POST_FAILED:
                     Toast.makeText(getBaseContext(), R.string.stage_post_failed, Toast.LENGTH_LONG).show();
