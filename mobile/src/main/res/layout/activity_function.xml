@@ -33,18 +33,20 @@
             android:layout_gravity="center">
 
             <ImageButton
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/img_btn_index"
-                android:src="@android:drawable/ic_dialog_info"
-                android:layout_weight="1" />
+                android:src="@drawable/index_all"
+                android:layout_weight="1"
+                android:scaleType="fitCenter" />
 
             <ImageButton
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/img_btn_report"
-                android:src="@android:drawable/ic_dialog_map"
-                android:layout_weight="1" />
+                android:src="@drawable/index_report"
+                android:layout_weight="1"
+                android:scaleType="fitCenter" />
         </TableRow>
 
         <TableRow
@@ -82,18 +84,20 @@
             android:gravity="center">
 
             <ImageButton
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/img_btn_marco"
-                android:src="@android:drawable/ic_menu_camera"
-                android:layout_weight="1" />
+                android:src="@drawable/index_macro"
+                android:layout_weight="1"
+                android:scaleType="fitCenter" />
 
             <ImageButton
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/img_btn_trend"
-                android:src="@android:drawable/ic_menu_slideshow"
-                android:layout_weight="1" />
+                android:src="@drawable/index_trend"
+                android:layout_weight="1"
+                android:scaleType="fitCenter" />
         </TableRow>
 
         <TableRow
@@ -130,18 +134,20 @@
             android:gravity="center">
 
             <ImageButton
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/img_btn_policy"
-                android:src="@android:drawable/ic_dialog_email"
-                android:layout_weight="1" />
+                android:src="@drawable/index_policy"
+                android:layout_weight="1"
+                android:scaleType="fitCenter" />
 
             <ImageButton
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/img_btn_answer"
-                android:src="@android:drawable/ic_menu_manage"
-                android:layout_weight="1" />
+                android:src="@drawable/index_answer"
+                android:layout_weight="1"
+                android:scaleType="fitCenter" />
         </TableRow>
 
         <TableRow
